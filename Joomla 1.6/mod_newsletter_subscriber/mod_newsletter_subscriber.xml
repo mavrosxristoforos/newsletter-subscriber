@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6.0" client="site" type="module" method="upgrade">
+    <name>Newsletter Subscriber</name>
+    <author>Christopher Mavros</author>
+    <creationDate>March 2011</creationDate>
+    <copyright>Copyright (C) 2008-2011 Christopher Mavros. All rights reserved.</copyright>
+    <license>GNU General Public License</license>
+    <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
+    <authorUrl>http://www.mavrosxristoforos.com/</authorUrl>
+    <version>1.2</version>
+    <description>A simple subscription module. Sends an email to the recipient with user's submitted data.</description>
+    <files>
+        <filename module="mod_newsletter_subscriber">mod_newsletter_subscriber.php</filename>
+    </files>
+    <config><fields name="params"><fieldset name="basic">
+        <field name="name_label"
+        type="text"
+        default="Name:"
+        label="Name Label"
+        description="The label next to the name input." />
+        <field name="email_label"
+        type="text"
+        default="Email:"
+        label="Email Label"
+        description="The label next to the email input." />         
+        <field name="email_recipient"
+        type="text"
+        default="email@email.com"
+        label="Email Recipient"
+        description="The recipient of the subscription notification mail." />       
+        <field name="button_text"
+        type="text"
+        default="Subscribe to Newsletter"
+        label="Button Text"
+        description="The text on the submit button" /> 
+        <field name="page_text"
+        type="text"
+        default="Thank you for subscribing to our site."
+        label="Thank you page text"
+        description="The text displayed to the user when he subscribes" /> 
+        <field name="thank_text_color"
+        type="text"
+        default="#000000"
+        label="Text Color"
+        description="The color of the Thank you text." />           
+        <field name="error_text"
+        type="text"
+        default="Your subscription could not be submitted. Please try again."
+        label="Error page text"
+        description="The text displayed to the user when the subscription fails to be mailed" />   
+        <field name="error_text_color"
+        type="text"
+        default="#000000"
+        label="Error Text Color"
+        description="The color of the error texts." />   
+        <field name="subject"
+        type="text"
+        default="New subscription to your site!"
+        label="Mail Subject"
+        description="The subject on the mail sent to the recipient containing the name and the email of the user." />           
+        <field name="from_name"
+        type="text"
+        default="Newsletter Subscriber"
+        label="Mail From Name"
+        description="The name of the subscription mail's sender" />
+        <field name="from_email"
+        type="text"
+        default="newsletter_subscriber@yoursite.com"
+        label="Mail From Email"
+        description="The email of the subscription mail's sender" />
+        <field name="sending_from_set"
+        type="radio"
+        default="1"
+        label="Sending from set email"
+        description="If this is yes, the mail sent comes from the set email above. If it is no, it comes from the data given while subscribing">
+            <option value="0">No</option>
+            <option value="1">Yes</option>        
+        </field>
+        <field name="no_name"
+        type="text"
+        default="Please write your name"
+        label="No Name Error Message"
+        description="The error message when the user does not write a name" />
+        <field name="no_email"
+        type="text"
+        default="Please write your email"
+        label="No Email Error Message"
+        description="The error message when the user does not write an email" />
+        <field name="invalid_email"
+        type="text"
+        default="Please write a valid email"
+        label="Invalid Email Error Message"
+        description="The error message when the user writes an invalid email" />     
+        <field name="name_width"
+        type="text"
+        default="20"
+        label="Name Width"
+        description="Width in letters of the name input" />
+        <field name="email_width"
+        type="text"
+        default="20"
+        label="Email Width"
+        description="Width in letters of the email input" />         
+        <field name="button_width"
+        type="text"
+        default="100"
+        label="Button Width"
+        description="Width in percent of the submit button" />     
+        <field name="save_list"
+        type="radio"
+        default="1"
+        label="Save to List"
+        description="If this is yes, then every subscription is written to a file in 'email' format. (This does not influent sending the email)">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </field>
+        <field name="save_path"
+        type="text"
+        default="mailing_list.txt"
+        label="List File Full Path"
+        description="Full path of list file. Please make sure all directories exist up to the file."/>        
+        <field name="exact_url"
+        type="radio"
+        default="1"
+        label="Exact URL"
+        description="This is an advanced option about the url retrieval way. If your site is http and your server/host supports https this should be No.">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </field> 
+        <field name="disable_https"
+        type="radio"
+        default="1"
+        label="Disable HTTPS"
+        description="This is an advanced option about the url retrieval way. Please enable it if NS posts in https and your site is http.">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </field>     
+        <field name="pre_text"
+        type="text"
+        default=""
+        label="Small Intro Text"
+        description="A small text shown before (above) the subscription form" />        
+        <field name="fixed_url"
+        type="radio"
+        default="0"
+        label="Fixed URL"
+        description="A simple solution to people that want to use NS in an exact page. Change this to Yes and write the URL of NS in the Fixed URL Address parameter">
+            <option value="0">No</option>
+            <option value="1">Yes</option>        
+        </field>        
+        <field name="fixed_url_address"
+        type="text"
+        default=""
+        label="Fixed URL Address"
+        description="If fixed url is true, this address is used for NS to post itself."/>
+        <field name="unique_id"
+        type="text"
+        default=""
+        label="Unique Identifier"
+        description="If you want to use NS multiple times in a page, use this unique identifier so that they don't get post together."/>
+        <field name="enable_anti_spam"
+        type="radio"
+        default="0"
+        label="Enable Anti-Spam"
+        description="Enable a simple question-answer anti-spam system">
+            <option value="0">No</option>
+            <option value="1">Yes</option>        
+        </field>
+        <field name="anti_spam_q"
+        type="text"
+        default="How many eyes has a typical person? (ex: 1)"
+        label="Anti-Spam Question"
+        description="A simple question to prevent spam"/>
+        <field name="anti_spam_a"
+        type="text"
+        default="2"
+        label="Anti-Spam Answer"
+        description="A simple answer to the question. Easy for people, hard for machines"/>
+        <field name="moduleclass_sfx"
+        type="text"
+        default=""
+        label="Module Class Suffix"
+        description="If you want to apply a custom style, change this class suffix. Example: modns your_class_suffix" />
+        <field name="addcss"
+        type="text"
+        default="div.modns tr, div.modns td { border: none; padding: 3px; }"
+        label="Custom CSS"
+        description="Custom CSS for the form." />             
+    </fieldset></fields></config>
+</extension>
