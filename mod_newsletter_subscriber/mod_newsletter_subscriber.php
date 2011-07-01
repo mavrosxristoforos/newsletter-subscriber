@@ -55,6 +55,8 @@ if ($fixed_url) {
   $url = $params->get('fixed_url_address', "");
 }
 
+$url = htmlentities($url, ENT_COMPAT, "UTF-8");
+
 $unique_id = $params->get('unique_id', "");
 
 $enable_anti_spam = $params->get('enable_anti_spam', true);
@@ -112,7 +114,8 @@ if (isset($_POST["m_name".$unique_id])) {
     }
     if ($saveList) {
       $file = fopen($savePath, "a");
-      fwrite($file, $_POST["m_name".$unique_id]." (".$_POST["m_email".$unique_id]."); ");
+      fwrite($file, htmlentities($_POST["m_name".$unique_id], ENT_COMPAT, "UTF-8")." (".
+                    htmlentities($_POST["m_email".$unique_id], ENT_COMPAT, "UTF-8")."); ");
       fclose($file);
     }
     return true;
@@ -144,12 +147,12 @@ if ($enable_anti_spam) {
 }
 print '<tr><td>' . $myNameLabel . '</td><td><input class="modns inputbox ' . $mod_class_suffix . '" type="text" name="m_name'.$unique_id.'" size="' . $nameWidth . '"';
 if (($errors & 1) != 1) {
-  print ' value="'.$_POST["m_name".$unique_id].'"';
+  print ' value="'.htmlentities($_POST["m_name".$unique_id], ENT_COMPAT, "UTF-8").'"';
 }
 print '/></td></tr>' . "\n";
 print '<tr><td>' . $myEmailLabel . '</td><td><input class="modns inputbox ' . $mod_class_suffix . '" type="text" name="m_email'.$unique_id.'" size="' . $emailWidth . '"';
 if (($errors & 2) != 2) {
-  print ' value="'.$_POST["m_email".$unique_id].'"';
+  print ' value="'.htmlentities($_POST["m_email".$unique_id], ENT_COMPAT, "UTF-8").'"';
 }
 print '/></td></tr>' . "\n";
 print '<tr><td colspan="2"><input class="modns button ' . $mod_class_suffix . '" type="submit" value="' . $buttonText . '" style="width: ' . $buttonWidth . '%"/></td></tr></table></form></div>' . "\n";

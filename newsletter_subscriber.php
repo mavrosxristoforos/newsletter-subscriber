@@ -70,6 +70,8 @@ class plgContentNewsletter_subscriber extends JPlugin {
     if ($fixed_url) {
       $url = $pluginParams->get('fixed_url_address', "");
     }
+    
+    $url = htmlentities($url, ENT_COMPAT, "UTF-8");
 
     $unique_id = $pluginParams->get('unique_id', "");
 
@@ -126,7 +128,8 @@ class plgContentNewsletter_subscriber extends JPlugin {
         }
         if ($saveList) {
           $file = fopen($savePath, "a");
-          fwrite($file, $_POST["name".$unique_id]." (".$_POST["email".$unique_id]."); ");
+          fwrite($file, htmlentities($_POST["name".$unique_id], ENT_COMPAT, "UTF-8")." (".
+                        htmlentities($_POST["email".$unique_id], ENT_COMPAT, "UTF-8")."); ");
           fclose($file);
         }
         return true;
@@ -157,12 +160,12 @@ class plgContentNewsletter_subscriber extends JPlugin {
     }
     $myReplacement = $myReplacement . '<tr><td>' . $myNameLabel . '</td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="name'.$unique_id.'" width="250"';
     if (($errors & 1) != 1) {
-      $myReplacement = $myReplacement . ' value="'.$_POST["name".$unique_id].'"';
+      $myReplacement = $myReplacement . ' value="'.htmlentities($_POST["name".$unique_id], ENT_COMPAT, "UTF-8").'"';
     }
     $myReplacement = $myReplacement . '/></td></tr>' . "\n" .
                      '<tr><td>' . $myEmailLabel . '</td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="email'.$unique_id.'" width="250"';
     if (($errors & 2) != 2) {
-      $myReplacement = $myReplacement . ' value="'.$_POST["email".$unique_id].'"';
+      $myReplacement = $myReplacement . ' value="'.htmlentities($_POST["email".$unique_id], ENT_COMPAT, "UTF-8").'"';
     }
     $myReplacement = $myReplacement . '/></td></tr>' . "\n" .
                      '<tr><td colspan="2"><input class="ns button ' . $classSuffix . '" type="submit" value="' . $buttonText . '" style="width: 100%;"/></td></tr></table></form></div>' . "\n";
