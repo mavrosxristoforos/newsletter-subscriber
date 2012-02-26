@@ -42,8 +42,8 @@ class plgContentNewsletter_subscriber extends JPlugin {
     $invalidEmail = $pluginParams->get('invalid_email', 'Please write a valid email');
 
     $classSuffix = $pluginParams->get('class_suffix', '');
-    
-    $addcss = $params->get('addcss', 'div.ns tr, div.ns td { border: none; padding: 3px; }');
+
+    $addcss = $pluginParams->get('addcss', 'div.ns tr, div.ns td { border: none; padding: 3px; }');
 
     $saveList = $pluginParams->get('save_list', true);
     $savePath = $pluginParams->get('save_path', 'mailing_list.txt');
@@ -70,7 +70,7 @@ class plgContentNewsletter_subscriber extends JPlugin {
     if ($fixed_url) {
       $url = $pluginParams->get('fixed_url_address', "");
     }
-    
+
     $url = htmlentities($url, ENT_COMPAT, "UTF-8");
 
     $unique_id = $pluginParams->get('unique_id', "");
