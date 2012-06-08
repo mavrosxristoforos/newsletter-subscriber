@@ -34,7 +34,7 @@ $addcss = $params->get('addcss', 'div.modns tr, div.modns td { border: none; pad
 $thanksTextColor = $params->get('thank_text_color', '#000000');
 $errorTextColor = $params->get('error_text_color', '#000000');
 $pre_text = $params->get('pre_text', '');
-    
+
 $disable_https = $params->get('disable_https', true);
 
 $exact_url = $params->get('exact_url', true);
@@ -66,7 +66,7 @@ $myAntiSpamAnswer = $params->get('anti_spam_a', '2');
 $myError = "";
 $errors = 3;
 
-if (isset($_POST["m_name".$unique_id])) {  
+if (isset($_POST["m_name".$unique_id])) {
   $errors = 0;
   if ($enable_anti_spam) {
     if ($_POST["modns_anti_spam_answer".$unique_id] != $myAntiSpamAnswer) {
@@ -81,17 +81,17 @@ if (isset($_POST["m_name".$unique_id])) {
     $myError = $myError . '<span style="color: '.$errorTextColor.';">' . $noEmail . '</span><br/>';
     $errors = $errors + 2;
   }
-  else if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $_POST["m_email".$unique_id])) {  
+  else if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", strtolower($_POST["m_email".$unique_id]))) {
     $myError = $myError . '<span style="color: '.$errorTextColor.';">' . $invalidEmail . '</span><br/>';
     $errors = $errors + 2;
   }
-  
+
   if ($myError == "") {
-  
+
     $myMessage = $myNameLabel . ' ' . $_POST["m_name".$unique_id] . ', ' .
                  $myEmailLabel . ' ' . $_POST["m_email".$unique_id] . ', ' .
                  date("r");
-    
+
     $mailSender = &JFactory::getMailer();
     $mailSender->addRecipient($recipient);
     if ($sendingWithSetEmail) {
@@ -100,10 +100,10 @@ if (isset($_POST["m_name".$unique_id])) {
     else {
       $mailSender->setSender(array($_POST["m_email".$unique_id],$_POST["m_name".$unique_id]));
     }
-  
+
     $mailSender->setSubject($subject);
     $mailSender->setBody($myMessage);
-  
+
     if (!$mailSender->Send()) {
       $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span></div>';
       print $myReplacement;
