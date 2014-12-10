@@ -156,14 +156,14 @@ class plgContentNewsletter_subscriber extends JPlugin {
     $myReplacement = $myReplacement . '<style type="text/css"><!--' . $addcss . '--></style>';
     $myReplacement = $myReplacement . '<div class="ns ' . $classSuffix . '"><form action="' . $url . '" method="post"><table>' . "\n";
     if ($enable_anti_spam) {
-      $myReplacement = $myReplacement . '<tr><td colspan="2">' . $myAntiSpamQuestion . '</td></tr><tr><td></td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="ns_anti_spam_answer'.$unique_id.'" width="250"/></td></tr>' . "\n";
+      $myReplacement = $myReplacement . '<tr><td colspan="2">' . $myAntiSpamQuestion . '</td></tr><tr><td></td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="ns_anti_spam_answer'.$unique_id.'" size="20"/></td></tr>' . "\n";
     }
-    $myReplacement = $myReplacement . '<tr><td>' . $myNameLabel . '</td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="name'.$unique_id.'" width="250"';
+    $myReplacement = $myReplacement . '<tr><td>' . $myNameLabel . '</td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="name'.$unique_id.'" size="20"';
     if (($errors & 1) != 1) {
       $myReplacement = $myReplacement . ' value="'.htmlentities($_POST["name".$unique_id], ENT_COMPAT, "UTF-8").'"';
     }
     $myReplacement = $myReplacement . '/></td></tr>' . "\n" .
-                     '<tr><td>' . $myEmailLabel . '</td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="email'.$unique_id.'" width="250"';
+                     '<tr><td>' . $myEmailLabel . '</td><td><input class="ns inputbox ' . $classSuffix . '" type="text" name="email'.$unique_id.'" size="20';
     if (($errors & 2) != 2) {
       $myReplacement = $myReplacement . ' value="'.htmlentities($_POST["email".$unique_id], ENT_COMPAT, "UTF-8").'"';
     }

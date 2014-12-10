@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.6.0" client="site" type="module" method="upgrade">
+<extension version="2.5.0" client="site" type="module" method="upgrade">
     <name>Newsletter Subscriber</name>
     <author>Christopher Mavros</author>
     <creationDate>March 2011</creationDate>
@@ -7,7 +7,7 @@
     <license>GNU General Public License</license>
     <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
     <authorUrl>http://www.mavrosxristoforos.com/</authorUrl>
-    <version>1.2</version>
+    <version>1.4</version>
     <description>A simple subscription module. Sends an email to the recipient with user's submitted data.</description>
     <files>
         <filename module="mod_newsletter_subscriber">mod_newsletter_subscriber.php</filename>
@@ -93,12 +93,12 @@
         description="The error message when the user writes an invalid email" />     
         <field name="name_width"
         type="text"
-        default="20"
+        default="12"
         label="Name Width"
         description="Width in letters of the name input" />
         <field name="email_width"
         type="text"
-        default="20"
+        default="12"
         label="Email Width"
         description="Width in letters of the email input" />         
         <field name="button_width"
