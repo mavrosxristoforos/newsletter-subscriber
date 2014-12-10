@@ -20,8 +20,8 @@ $noName = $params->get('no_name', 'Please write your name');
 $noEmail = $params->get('no_email', 'Please write your email');
 $invalidEmail = $params->get('invalid_email', 'Please write a valid email');
 
-$nameWidth = $params->get('name_width', '20');
-$emailWidth = $params->get('email_width', '20');
+$nameWidth = $params->get('name_width', '12');
+$emailWidth = $params->get('email_width', '12');
 $buttonWidth = $params->get('button_width', '100');
 
 $saveList = $params->get('save_list', true);
