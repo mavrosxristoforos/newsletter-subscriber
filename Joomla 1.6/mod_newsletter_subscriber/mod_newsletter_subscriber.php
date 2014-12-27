@@ -92,7 +92,7 @@ if (isset($_POST["m_name".$unique_id])) {
                  $myEmailLabel . ' ' . $_POST["m_email".$unique_id] . ', ' .
                  date("r");
 
-    $mailSender = &JFactory::getMailer();
+    $mailSender = JFactory::getMailer();
     $mailSender->addRecipient($recipient);
     if ($sendingWithSetEmail) {
       $mailSender->setSender(array($fromEmail,$fromName));
