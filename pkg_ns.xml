@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" version="3.0" method="upgrade">
+  <packagename>ns</packagename>
+  <name>Newsletter Subscriber</name>
+  <creationDate>August 1, 2015</creationDate>
+  <author>Christopher Mavros</author>
+  <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
+  <authorUrl>mavrosxristoforos.com</authorUrl>
+  <copyright>All Rights Reserved (C) Mavrosxristoforos.com</copyright>
+  <license>GPLv3</license>
+  <version>1.3</version>
+  <description>Newsletter Subscriber - A Simple Sign-up form for your Mailing List.</description>
+  <files>
+    <file type="module" id="mod_newsletter_subscriber">mod_newsletter_subscriber_j25_j3.zip</file>    
+    <file type="plugin" id="newsletter_subscriber">newsletter_subscriber_j25_j3.zip</file>
+  </files>
+  <params/>
+  <config/>
+</extension>
