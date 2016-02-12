@@ -142,17 +142,17 @@ print '<div class="modns"><form action="' . $url . '" method="post">' . "\n" .
       '<div class="modnsintro">'.$pre_text.'</div>' . "\n";
 print '<table>';
 if ($enable_anti_spam) {
-  print '<tr><td colspan="2">' . $myAntiSpamQuestion . '</td></tr><tr><td></td><td><input class="modns inputbox ' . $mod_class_suffix . '" type="text" name="modns_anti_spam_answer'.$unique_id.'" size="' . $nameWidth . '"/></td></tr>' . "\n";
+  print '<tr><td colspan="2">' . $myAntiSpamQuestion . '</td></tr><tr><td></td><td><input class="modns inputbox form-control ' . $mod_class_suffix . '" type="text" name="modns_anti_spam_answer'.$unique_id.'" size="' . $nameWidth . '"/></td></tr>' . "\n";
 }
-print '<tr><td>' . $myNameLabel . '</td><td><input class="modns inputbox ' . $mod_class_suffix . '" type="text" name="m_name'.$unique_id.'" size="' . $nameWidth . '"';
+print '<tr><td>' . $myNameLabel . '</td><td><input class="modns inputbox form-control ' . $mod_class_suffix . '" type="text" name="m_name'.$unique_id.'" size="' . $nameWidth . '"';
 if (($errors & 1) != 1) {
   print ' value="'.htmlentities($_POST["m_name".$unique_id], ENT_COMPAT, "UTF-8").'"';
 }
 print '/></td></tr>' . "\n";
-print '<tr><td>' . $myEmailLabel . '</td><td><input class="modns inputbox ' . $mod_class_suffix . '" type="text" name="m_email'.$unique_id.'" size="' . $emailWidth . '"';
+print '<tr><td>' . $myEmailLabel . '</td><td><input class="modns inputbox form-control ' . $mod_class_suffix . '" type="text" name="m_email'.$unique_id.'" size="' . $emailWidth . '"';
 if (($errors & 2) != 2) {
   print ' value="'.htmlentities($_POST["m_email".$unique_id], ENT_COMPAT, "UTF-8").'"';
 }
 print '/></td></tr>' . "\n";
-print '<tr><td colspan="2"><input class="modns button ' . $mod_class_suffix . '" type="submit" value="' . $buttonText . '" style="width: ' . $buttonWidth . '%"/></td></tr></table></form></div>' . "\n";
+print '<tr><td colspan="2"><input class="modns button btn btn-primary ' . $mod_class_suffix . '" type="submit" value="' . $buttonText . '" style="width: ' . $buttonWidth . '%"/></td></tr></table></form></div>' . "\n";
 return true;
