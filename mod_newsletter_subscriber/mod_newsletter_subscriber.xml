@@ -7,7 +7,7 @@
     <license>GNU General Public License</license>
     <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
     <authorUrl>http://www.mavrosxristoforos.com/</authorUrl>
-    <version>1.4</version>
+<version>1.4.21</version>
     <description>A simple subscription module. Sends an email to the recipient with user's submitted data.</description>
     <files>
         <filename module="mod_newsletter_subscriber">mod_newsletter_subscriber.php</filename>
