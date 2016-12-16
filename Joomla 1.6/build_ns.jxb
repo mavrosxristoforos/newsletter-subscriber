@@ -2,9 +2,10 @@ INCVERSION:mod_newsletter_subscriber/mod_newsletter_subscriber.xml
 INCVERSION:newsletter_subscriber.xml
 INCVERSION:pkg_ns.xml
 DELETE:mod_newsletter_subscriber_j25_j3.zip
-DELETE:newsletter_subscriber_j25_j3.zip.zip
+DELETE:newsletter_subscriber_j25_j3.zip
 DELETE:pkg_ns.zip
 ZIPDIR:mod_newsletter_subscriber
 RENAME:mod_newsletter_subscriber.zip mod_newsletter_subscriber_j25_j3.zip
-ZIPFILES:newsletter_subscriber_j25_j3.zip newsletter_subscriber.php newsletter_subscriber.xml
+ZIPDIR:plg_newsletter_subscriber
+RENAME:plg_newsletter_subscriber.zip newsletter_subscriber_j25_j3.zip
 ZIPFILES:pkg_ns.zip mod_newsletter_subscriber_j25_j3.zip newsletter_subscriber_j25_j3.zip pkg_ns.xml

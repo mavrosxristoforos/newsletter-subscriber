@@ -2,74 +2,67 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-$myNameLabel = $params->get('name_label', 'Name:');
-$myEmailLabel = $params->get('email_label', 'Email:');
-
+// Notification Options
 $recipient = $params->get('email_recipient', '');
+$fromName = $params->get('from_name', 'Newsletter Subscriber');
+$fromEmail = $params->get('from_email', 'newsletter_subscriber@yoursite.com');
+$subject = $params->get('subject', 'New subscription to your site!');
+$sendingWithSetEmail = $params->get('sending_from_set', true);
 
+// Form Options
+$unique_id = (isset($_POST["modns_uniqid"])) ? $_POST["modns_uniqid"] : $params->get('unique_id', "").uniqid();
+
+// Texts
+$namePlaceholder = $params->get('name_placeholder', 'Name');
+$emailPlaceholder = $params->get('email_placeholder', 'email@site.com');
 $buttonText = $params->get('button_text', 'Subscribe to Newsletter');
 $pageText = $params->get('page_text', 'Thank you for subscribing to our site.');
 $errorText = $params->get('errot_text', 'Your subscription could not be submitted. Please try again.');
-
-$subject = $params->get('subject', 'New subscription to your site!');
-$fromName = $params->get('from_name', 'Newsletter Subscriber');
-$fromEmail = $params->get('from_email', 'newsletter_subscriber@yoursite.com');
-$sendingWithSetEmail = $params->get('sending_from_set', true);
-
 $noName = $params->get('no_name', 'Please write your name');
 $noEmail = $params->get('no_email', 'Please write your email');
 $invalidEmail = $params->get('invalid_email', 'Please write a valid email');
 
+// Sizes & Colors
 $nameWidth = $params->get('name_width', '12');
 $emailWidth = $params->get('email_width', '12');
 $buttonWidth = $params->get('button_width', '100');
+$thanksTextColor = $params->get('thank_text_color', '#000000');
+$errorTextColor = $params->get('error_text_color', '#000000');
 
+// Mailing List
 $saveList = $params->get('save_list', true);
 $savePath = $params->get('save_path', 'mailing_list.txt');
 
-$mod_class_suffix = $params->get('moduleclass_sfx', '');
-
-$addcss = $params->get('addcss', 'div.modns tr, div.modns td { border: none; padding: 3px; }');
-
-$thanksTextColor = $params->get('thank_text_color', '#000000');
-$errorTextColor = $params->get('error_text_color', '#000000');
-$pre_text = $params->get('pre_text', '');
-
-$disable_https = $params->get('disable_https', true);
-
-$exact_url = $params->get('exact_url', true);
-if (!$exact_url) {
-  $url = JURI::current();
-}
-else {
-  if (!$disable_https) {
-    $url = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-  }
-  else {
-    $url = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-  }
-}
-
-$fixed_url = $params->get('fixed_url', true);
-if ($fixed_url) {
-  $url = $params->get('fixed_url_address', "");
-}
-
-$url = htmlentities($url, ENT_COMPAT, "UTF-8");
-
-$unique_id = $params->get('unique_id', "");
-
-$enable_anti_spam = $params->get('enable_anti_spam', true);
+// Anti-Spam
+$enable_anti_spam = $params->get('enable_anti_spam', '1');
 $myAntiSpamQuestion = $params->get('anti_spam_q', 'How many eyes has a typical person? (ex: 1)');
 $myAntiSpamAnswer = $params->get('anti_spam_a', '2');
+$anti_spam_position = $params->get('anti_spam_position', 0);
+
+// Advanced
+$mod_class_suffix = $params->get('moduleclass_sfx', '');
+$document = JFactory::getDocument();
+$document->addStyleDeclaration('
+  .modns .input-group input.modns{max-width: 92%;}
+  .modns .g-recaptcha {margin-bottom: 5px;}
+'.$params->get('customcss', ''));
+
 
 $myError = "";
 $errors = 3;
-
 if (isset($_POST["m_name".$unique_id])) {
   $errors = 0;
-  if ($enable_anti_spam) {
-    if ($_POST["modns_anti_spam_answer".$unique_id] != $myAntiSpamAnswer) {
+  if ($enable_anti_spam == '1') {
+    if (strtolower($_POST['modns_anti_spam_answer'.$unique_id]) != strtolower($myAntiSpamAnswer)) {
+      $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+    }
+  }
+  else if ($enable_anti_spam == '2') {
+    // check captcha plugin.
+    JPluginHelper::importPlugin('captcha');
+    $d = JEventDispatcher::getInstance();
+    $res = $d->trigger('onCheckAnswer', 'not_used');
+    if( (!isset($res[0])) || (!$res[0]) ){
       $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
     }
   }
@@ -87,10 +80,10 @@ if (isset($_POST["m_name".$unique_id])) {
   }
 
   if ($myError == "") {
-
-    $myMessage = $myNameLabel . ' ' . $_POST["m_name".$unique_id] . ', ' .
-                 $myEmailLabel . ' ' . $_POST["m_email".$unique_id] . ', ' .
-                 date("r");
+    $myMessage = JText::_('Name') . ': ' . $_POST["m_name".$unique_id] . ', ' ."\n".
+                 JText::_('Email') . ': ' . $_POST["m_email".$unique_id] . ', ' ."\n".
+                 date("r")."\n".
+                 JText::_('IP').': '.$_SERVER['REMOTE_ADDR'];
 
     $mailSender = JFactory::getMailer();
     $mailSender->addRecipient($recipient);
@@ -122,37 +115,33 @@ if (isset($_POST["m_name".$unique_id])) {
 }
 
 if ($recipient === "") {
-  $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">No recipient specified</span></div>';
+  $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">No notification recipient specified. That is required.</span></div>';
   print $myReplacement;
   return true;
 }
 
 if ($recipient === "email@email.com") {
-  $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">Mail Recipient is specified as email@email.com.<br/>Please change it from the Module parameters.</span></div>';
+  $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">Notification Recipient is specified as email@email.com.<br/>Please change it from the Module parameters.</span></div>';
   print $myReplacement;
   return true;
 }
 
-if ($myError != "") {
-  print $myError;
+// Prepare for Template
+$anti_spam_field = '';
+if ($enable_anti_spam == '2') {
+  $anti_spam_field = (JFactory::getConfig()->get('captcha') != '0') ? JCaptcha::getInstance(JFactory::getConfig()->get('captcha'))->display('ns_recaptcha', 'ns_recaptcha', 'g-recaptcha') : '';
+}
+else if ($enable_anti_spam == '1') {
+  // Label as Placeholder option is intentionally overlooked.
+  $anti_spam_field = '<label for="modns_anti_spam_answer'.$unique_id.'">'.$myAntiSpamQuestion.'</label>'.
+       '<input class="modns inputbox form-control ' . $mod_class_suffix . '" type="text" '.
+       ' name="modns_anti_spam_answer'.$unique_id.'" id="modns_anti_spam_answer'.$unique_id.'" size="' . $nameWidth . '"/>';
 }
 
-print '<style type="text/css"><!--' . $addcss . '--></style>';
-print '<div class="modns"><form action="' . $url . '" method="post">' . "\n" .
-      '<div class="modnsintro">'.$pre_text.'</div>' . "\n";
-print '<table>';
-if ($enable_anti_spam) {
-  print '<tr><td colspan="2">' . $myAntiSpamQuestion . '</td></tr><tr><td></td><td><input class="modns inputbox form-control ' . $mod_class_suffix . '" type="text" name="modns_anti_spam_answer'.$unique_id.'" size="' . $nameWidth . '"/></td></tr>' . "\n";
-}
-print '<tr><td>' . $myNameLabel . '</td><td><input class="modns inputbox form-control ' . $mod_class_suffix . '" type="text" name="m_name'.$unique_id.'" size="' . $nameWidth . '"';
-if (($errors & 1) != 1) {
-  print ' value="'.htmlentities($_POST["m_name".$unique_id], ENT_COMPAT, "UTF-8").'"';
-}
-print '/></td></tr>' . "\n";
-print '<tr><td>' . $myEmailLabel . '</td><td><input class="modns inputbox form-control ' . $mod_class_suffix . '" type="text" name="m_email'.$unique_id.'" size="' . $emailWidth . '"';
-if (($errors & 2) != 2) {
-  print ' value="'.htmlentities($_POST["m_email".$unique_id], ENT_COMPAT, "UTF-8").'"';
-}
-print '/></td></tr>' . "\n";
-print '<tr><td colspan="2"><input class="modns button btn btn-primary ' . $mod_class_suffix . '" type="submit" value="' . $buttonText . '" style="width: ' . $buttonWidth . '%"/></td></tr></table></form></div>' . "\n";
-return true;
+$name_value = (($errors & 1) != 1) ? ' value="'.htmlentities($_POST["m_name".$unique_id], ENT_COMPAT, "UTF-8").'"' : '';
+$email_value = (($errors & 2) != 2) ? ' value="'.htmlentities($_POST["m_email".$unique_id], ENT_COMPAT, "UTF-8").'"' : '';
+
+$action = '';
+if ($params->get('fixed_url', false)) { $action = ' action="' . $params->get('fixed_url_address', "") . '" '; }
+
+require JModuleHelper::getLayoutPath('mod_newsletter_subscriber');

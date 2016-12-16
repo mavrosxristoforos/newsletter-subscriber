@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.0" client="site" type="module" method="upgrade">
-    <name>Newsletter Subscriber</name>
+<extension version="1.6.0" client="site" type="plugin" group="content" method="upgrade">
+    <name>Content - Newsletter Subscriber</name>
     <author>Christopher Mavros</author>
     <creationDate>March 2011</creationDate>
     <copyright>Copyright (C) 2008-2011 Christopher Mavros. All rights reserved.</copyright>
     <license>GNU General Public License</license>
     <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
     <authorUrl>http://www.mavrosxristoforos.com/</authorUrl>
-<version>1.5.39</version>
-    <description>A simple subscription module. Sends an email to the recipient with user's submitted data and saves them in a text file.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;http://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
+<version>1.5.33</version>
+    <description>A simple subscription plugin. Sends an email to the recipient with user's submitted data and saves them in a text file.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;http://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
     <files>
-        <filename module="mod_newsletter_subscriber">mod_newsletter_subscriber.php</filename>
+        <filename plugin="newsletter_subscriber">newsletter_subscriber.php</filename>
         <folder>tmpl</folder>
     </files>
     <config><fields name="params"><fieldset name="basic">
@@ -170,13 +170,13 @@
             <option value="0">Before</option>
             <option value="1">After</option>        
         </field>
-    </fieldset>
+    </fieldset>     
     <fieldset name="advanced">
-        <field name="moduleclass_sfx"
+        <field name="class_sfx"
         type="text"
         default=""
-        label="Module Class Suffix"
-        description="If you want to apply a custom style, change this class suffix." />
+        label="Class Suffix"
+        description="If you want to apply a custom style, change this class suffix. Example Output: ns your_class_suffix" />    
         <field name="customcss"
         type="text"
         default=""
@@ -195,15 +195,5 @@
         default=""
         label="Fixed URL Address"
         description="If fixed url is true, this address is used for Newsletter Subscriber to post itself."/> 
-	<field name="cache" type="list"
-          default="1" label="Caching"
-	  description="Select whether to cache the content of this module">
-	    <option value="1">Use global</option>
-	    <option value="0">No caching</option>
-	</field>
-	<field name="cache_time" type="text"
-	  default="900" label="Cache Time"
-	  description="The time before the module is recached" />
-    </fieldset>
-    </fields></config>
+    </fieldset></fields></config>
 </extension>
