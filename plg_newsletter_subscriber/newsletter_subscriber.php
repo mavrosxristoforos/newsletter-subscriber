@@ -6,10 +6,6 @@ jimport( 'joomla.plugin.plugin' );
 
 class plgContentNewsletter_subscriber extends JPlugin {
 
-  function plgContentNewsletter_subscriber( &$subject, $config ) {
-    parent::__construct( $subject, $config );
-  }
-
   public function onContentPrepare($context, &$row, &$params, $page = 0) {
     if (is_object($row)) {
         $text = &$row->text;
@@ -129,7 +125,7 @@ class plgContentNewsletter_subscriber extends JPlugin {
         }
         if ($saveList) {
           $file = fopen($savePath, "a");
-          fwrite($file, utf8_encode($_POST["m_name".$unique_id]." (".$_POST["m_email".$unique_id]."); "));
+          fwrite($file, $_POST["m_name".$unique_id]." (".$_POST["m_email".$unique_id]."); ");
           fclose($file);
         }
         return true;
