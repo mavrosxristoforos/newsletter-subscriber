@@ -107,7 +107,7 @@ if (isset($_POST["m_name".$unique_id])) {
     }
     if ($saveList) {
       $file = fopen($savePath, "a");
-      fwrite($file, utf8_encode($_POST["m_name".$unique_id]." (".$_POST["m_email".$unique_id]."); "));
+      fwrite($file, $_POST["m_name".$unique_id]." (".$_POST["m_email".$unique_id]."); ");
       fclose($file);
     }
     return true;
