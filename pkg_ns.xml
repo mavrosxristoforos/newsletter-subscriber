@@ -8,12 +8,15 @@
   <authorUrl>mavrosxristoforos.com</authorUrl>
   <copyright>All Rights Reserved (C) Mavrosxristoforos.com</copyright>
   <license>GPLv3</license>
-<version>1.5.41</version>
+<version>1.5.45</version>
   <description>Newsletter Subscriber - A Simple Sign-up form for your Mailing List.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;http://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
   <files>
     <file type="module" id="mod_newsletter_subscriber">mod_newsletter_subscriber_j25_j3.zip</file>    
     <file type="plugin" id="newsletter_subscriber">newsletter_subscriber_j25_j3.zip</file>
   </files>
+  <updateservers>
+     <server type="extension" priority="1" name="Newsletter Subscriber Updates">http://mavrosxristoforos.com/index.php?option=com_extensionupdater&amp;extension=newsletter_subscriber</server>
+  </updateservers>  
   <params/>
   <config/>
 </extension>
