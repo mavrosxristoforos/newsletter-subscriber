@@ -1,5 +1,5 @@
 INCVERSION:mod_newsletter_subscriber/mod_newsletter_subscriber.xml
-INCVERSION:newsletter_subscriber.xml
+INCVERSION:plg_newsletter_subscriber/newsletter_subscriber.xml
 INCVERSION:pkg_ns.xml
 DELETE:mod_newsletter_subscriber_j25_j3.zip
 DELETE:newsletter_subscriber_j25_j3.zip

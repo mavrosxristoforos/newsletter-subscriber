@@ -5,8 +5,8 @@
 # author    Christopher Mavros - Mavrosxristoforos.com
 # copyright Copyright (C) 2008 Mavrosxristoforos.com. All Rights Reserved.
 # @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
-# Websites: http://www.mavrosxristoforos.com
-# Technical Support:  Forum - http://www.mavrosxristoforos.com/support/forum
+# Websites: https://mavrosxristoforos.com
+# Technical Support:  Forum - https://mavrosxristoforos.com/support/forum
 -------------------------------------------------------------------------*/
 
 // no direct access
@@ -69,12 +69,25 @@ if (isset($_POST["m_name".$unique_id])) {
   }
   else if ($enable_anti_spam == '2') {
     // check captcha plugin.
-    JPluginHelper::importPlugin('captcha');
+    $isCaptchaValidated = true;
+    if (JFactory::getConfig()->get('captcha') != '0') {
+      $captcha = JCaptcha::getInstance(JFactory::getConfig()->get('captcha'));
+      try {
+        $isCaptchaValidated = $captcha->checkAnswer('ns_recaptcha');
+      }
+      catch(RuntimeException $e) {
+        $isCaptchaValidated = false;
+      }
+    }
+    if (!$isCaptchaValidated) {
+      $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+    }
+    /*JPluginHelper::importPlugin('captcha');
     $d = JEventDispatcher::getInstance();
     $res = $d->trigger('onCheckAnswer', 'not_used');
     if( (!isset($res[0])) || (!$res[0]) ){
       $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
-    }
+    }*/
   }
   if ($_POST["m_name".$unique_id] === "") {
     $myError = $myError . '<span style="color: '.$errorTextColor.';">' . $noName . '</span><br/>';

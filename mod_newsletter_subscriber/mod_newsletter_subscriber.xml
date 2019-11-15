@@ -3,10 +3,10 @@
     <name>Newsletter Subscriber</name>
     <author>Christopher Mavros</author>
     <creationDate>March 2011</creationDate>
-    <copyright>Copyright (C) 2008-2011 Christopher Mavros. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2008 Christopher Mavros. All rights reserved.</copyright>
     <license>GNU General Public License</license>
     <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
-    <authorUrl>http://www.mavrosxristoforos.com/</authorUrl>
+    <authorUrl>https://www.mavrosxristoforos.com/</authorUrl>
 <version>1.5.45</version>
     <description>A simple subscription module. Sends an email to the recipient with user's submitted data and saves them in a text file.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;http://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
     <files>
