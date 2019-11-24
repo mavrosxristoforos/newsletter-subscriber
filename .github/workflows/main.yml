@@ -15,6 +15,6 @@ jobs:
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
-    - uses: mavrosxristoforos/jxb/index.js
+    - uses: mavrosxristoforos/jxb@14078631438eb70982d7cef986b024885dd562d5
       with:
         build-file: 'build-ns.jxb'
