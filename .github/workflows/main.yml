@@ -14,3 +14,4 @@ jobs:
     - uses: mavrosxristoforos/jxb@master
       with:
         build-file: 'build_ns.jxb'
+        ignore-inc-version: true
