@@ -13,4 +13,4 @@ jobs:
       #  fetch-depth: 1
     - uses: mavrosxristoforos/jxb@master
       with:
-        build-file: 'build-ns.jxb'
+        build-file: 'build_ns.jxb'
