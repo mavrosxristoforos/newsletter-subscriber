@@ -1,7 +1,7 @@
 name: CD
 
 on:
-  push
+  push:
     paths-ignore:
     - '.github/**'
     - '**/readme.md'
