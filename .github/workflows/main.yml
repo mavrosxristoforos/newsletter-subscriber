@@ -1,6 +1,10 @@
 name: CD
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+    - '.github/**'
+    - '**/readme.md'
 
 jobs:
   build:
@@ -8,10 +12,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-      #with:
-      #  fetch-depth: 1
-    - uses: mavrosxristoforos/jxb@master
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Build Joomla Package
+      id: jxbuild
+      uses: mavrosxristoforos/jxb@1.0
       with:
         build-file: 'build_ns.jxb'
-        ignore-inc-version: true
+    #- name: Get XML
+    #  id: getxml
+    #  uses: mavrosxristoforos/get-xml-info
+    #  
+    - name: Create Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: 'pkg_ns.zip'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: '1.5.45'
+        #tag: steps.getxml.outputs.version
