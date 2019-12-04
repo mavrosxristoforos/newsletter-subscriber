@@ -4,13 +4,12 @@ on:
   push:
     paths-ignore:
     - '.github/**'
+    - '.git**'
     - '**/readme.md'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@v1
@@ -30,5 +29,4 @@ jobs:
       with:
         artifacts: 'pkg_ns.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
-        #tag: '1.5.45'
-        tag: steps.getxml.outputs.info
+        tag: ${{ steps.getxml.outputs.info }}
