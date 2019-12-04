@@ -53,7 +53,7 @@ $anti_spam_position = $params->get('anti_spam_position', 0);
 $mod_class_suffix = $params->get('moduleclass_sfx', '');
 $document = JFactory::getDocument();
 $document->addStyleDeclaration('
-  .modns .input-group input.modns{max-width: 92%;}
+  .modns .input-group input.modns{max-width: 92%; margin-bottom: 8px;}
   .modns .g-recaptcha {margin-bottom: 5px;}
 '.$params->get('customcss', ''));
 

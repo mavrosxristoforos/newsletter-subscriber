@@ -71,7 +71,7 @@ class plgContentNewsletter_subscriber extends JPlugin {
     $class_suffix = $pluginParams->get('class_sfx', '');
     $document = JFactory::getDocument();
     $document->addStyleDeclaration('
-      .ns .input-group input.ns{max-width: 92%;}
+      .ns .input-group input.ns{max-width: 92%; margin-bottom: 8px; position: static; flex: none; width: 92%; }
       .ns .g-recaptcha {margin-bottom: 5px;}
     '.$pluginParams->get('customcss', ''));
 
