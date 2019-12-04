@@ -2,9 +2,9 @@ name: CD
 
 on:
   push:
-    #paths-ignore:
-    #- '.github/**'
-    #- '**/readme.md'
+    paths-ignore:
+    - '.github/**'
+    - '**/readme.md'
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v1
     - name: Build Joomla Package
       id: jxbuild
-      uses: mavrosxristoforos/jxb@v1.0
+      uses: mavrosxristoforos/jxb@1.0
       with:
         build-file: 'build_ns.jxb'
     #- name: Get XML
