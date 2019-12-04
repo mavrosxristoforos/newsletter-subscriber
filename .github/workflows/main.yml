@@ -3,7 +3,7 @@ name: CD
 on:
   push:
     paths-ignore:
-    #- '.github/**'
+    - '.github/**'
     - '**/readme.md'
 
 jobs:
