@@ -3,8 +3,8 @@ name: CD
 on:
   push:
     paths-ignore:
-    #- '.github/**'
-    #- '.git**'
+    - '.github/**'
+    - '.git**'
     - '**README.md'
 
 jobs:
@@ -32,7 +32,10 @@ jobs:
       with:
         tag_name: ${{ steps.getxml.outputs.info }}
         release_name: Newsletter Subscriber ${{ steps.getxml.outputs.info }}
-        body: 'Test release body text'
+        #body: |
+        #    Changes in this Release
+        #    - First Change
+        #    - Second Change
         draft: false
         prerelease: false
     - name: Upload Release Asset
