@@ -73,7 +73,7 @@ if (isset($_POST["m_name".$unique_id])) {
     if (JFactory::getConfig()->get('captcha') != '0') {
       $captcha = JCaptcha::getInstance(JFactory::getConfig()->get('captcha'));
       try {
-        $isCaptchaValidated = $captcha->checkAnswer('ns_recaptcha');
+        $isCaptchaValidated = $captcha->checkAnswer(JFactory::getApplication()->input->get('ns_recaptcha', null, 'string'));
       }
       catch(RuntimeException $e) {
         $isCaptchaValidated = false;

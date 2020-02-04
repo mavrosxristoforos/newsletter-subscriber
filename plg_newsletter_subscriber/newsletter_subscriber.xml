@@ -7,193 +7,80 @@
     <license>GNU General Public License</license>
     <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
     <authorUrl>https://www.mavrosxristoforos.com/</authorUrl>
-<version>1.5.39</version>
-    <description>A simple subscription plugin. Sends an email to the recipient with user's submitted data and saves them in a text file.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;http://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
+<version>1.5.40</version>
+    <description>A simple subscription plugin. Sends an email to the recipient with user's submitted data and saves them in a text file.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;https://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
     <files>
         <filename plugin="newsletter_subscriber">newsletter_subscriber.php</filename>
         <folder>tmpl</folder>
     </files>
-    <config><fields name="params"><fieldset name="basic">
+    <config><fields name="params">
+      <fieldset name="basic">
         <field name="spacert1" type="spacer" class="text" label="&lt;strong&gt;Notification Options&lt;/strong&gt;"/> 
-          <field name="email_recipient"
-            type="text"
-            default="email@email.com"
-            label="Notification Recipient"
-            description="The recipient of the subscription notification mail." />       
-          <field name="subject"
-            type="text"
-            default="New subscription to your site!"
-            label="Notification Subject"
-            description="The subject on the mail sent to the recipient containing the name and the email of the user." />           
-          <field name="from_name"
-            type="text"
-            default="Newsletter Subscriber"
-            label="Notification Mail From Name"
-            description="The name of the subscription mail's sender" />
-          <field name="from_email"
-            type="text"
-            default="newsletter_subscriber@yoursite.com"
-            label="Notification Mail From Email"
-            description="The email of the subscription mail's sender" />
-          <field name="sending_from_set"
-            type="radio"
-            default="1" class="btn-group btn-group-yesno"
-            label="Sending from set email"
-            description="If this is yes, the mail sent comes from the set email above. If it is no, it comes from the data given while subscribing">
+          <field name="email_recipient" type="text" default="email@email.com" label="Notification Recipient" description="The recipient of the subscription notification mail." />       
+          <field name="subject" type="text" default="New subscription to your site!" label="Notification Subject" description="The subject on the mail sent to the recipient containing the name and the email of the user." />           
+          <field name="from_name" type="text" default="Newsletter Subscriber" label="Notification Mail From Name" description="The name of the subscription mail's sender" />
+          <field name="from_email" type="text" default="newsletter_subscriber@yoursite.com" label="Notification Mail From Email" description="The email of the subscription mail's sender" />
+          <field name="sending_from_set" type="radio" default="1" class="btn-group btn-group-yesno" label="Sending from set email" description="If this is yes, the mail sent comes from the set email above. If it is no, it comes from the data given while subscribing">
               <option value="0">JNO</option>
               <option value="1">JYES</option>        
           </field>
         <field name="spacert2" type="spacer" class="text" label="&lt;strong&gt;Form Options&lt;/strong&gt;"/>           
-          <field name="unique_id"
-            type="text"
-            default=""
-            label="Unique Identifier"
-            description="If you want to use NS multiple times in a page, use this unique identifier so that they don't get post together."/>
-        </fieldset>
+        <field name="unique_id" type="text" default="" label="Unique Identifier" description="If you want to use NS multiple times in a page, use this unique identifier so that they don't get post together."/>
+      </fieldset>
         
-        <fieldset name="texts" label="Text Options">
-          <field name="name_placeholder"
-            type="text"
-            default="Name"
-            label="Name Placeholder"
-            description="The placeholder of the name input." />
-          <field name="email_placeholder"
-            type="text"
-            default="email@site.com"
-            label="Email Placeholder"
-            description="The placeholder of the email input." />
-          <field name="button_text"
-            type="text"
-            default="Subscribe to Newsletter"
-            label="Button Text"
-            description="The text on the submit button" /> 
-          <field name="page_text"
-            type="text"
-            default="Thank you for subscribing to our site."
-            label="Thank you text"
-            description="The text displayed to the user when he subscribes" /> 
-          <field name="error_text"
-	    type="text"
-	    default="Your subscription could not be submitted. Please try again."
-	    label="Error page text"
-            description="The text displayed to the user when the subscription fails to be mailed" />   
-          <field name="no_name"
-            type="text"
-            default="Please write your name"
-            label="No Name Error Message"
-            description="The error message when the user does not write a name" />
-          <field name="no_email"
-            type="text"
-            default="Please write your email"
-            label="No Email Error Message"
-            description="The error message when the user does not write an email" />
-          <field name="invalid_email"
-            type="text"
-            default="Please write a valid email"
-            label="Invalid Email Error Message"
-            description="The error message when the user writes an invalid email" />     
-          <field name="pre_text"
-            type="editor" filter="raw"
-            default=""
-            label="Small Intro Text"
-            description="A small text shown before (above) the subscription form" />        
-        </fieldset>
+      <fieldset name="texts" label="Text Options">
+          <field name="name_placeholder" type="text" default="Name" label="Name Placeholder" description="The placeholder of the name input." />
+          <field name="email_placeholder" type="text" default="email@site.com" label="Email Placeholder" description="The placeholder of the email input." />
+          <field name="button_text" type="text" default="Subscribe to Newsletter" label="Button Text" description="The text on the submit button" /> 
+          <field name="page_text" type="text" default="Thank you for subscribing to our site." label="Thank you text" description="The text displayed to the user when he subscribes" /> 
+          <field name="error_text" type="text" default="Your subscription could not be submitted. Please try again." label="Error page text" description="The text displayed to the user when the subscription fails to be mailed" />   
+          <field name="no_name" type="text" default="Please write your name" label="No Name Error Message" description="The error message when the user does not write a name" />
+          <field name="no_email" type="text" default="Please write your email" label="No Email Error Message" description="The error message when the user does not write an email" />
+          <field name="invalid_email" type="text" default="Please write a valid email" label="Invalid Email Error Message" description="The error message when the user writes an invalid email" />     
+          <field name="pre_text" type="editor" filter="raw" default="" label="Small Intro Text" description="A small text shown before (above) the subscription form" />        
+      </fieldset>
         
-        <fieldset name="size_color" label="Size &amp; Color">  
-          <field name="name_width"
-            type="text"
-            default="12"
-            label="Name Width"
-            description="Width in letters of the name input" />
-          <field name="email_width"
-            type="text"
-            default="12"
-            label="Email Width"
-            description="Width in letters of the email input" />         
-          <field name="thank_text_color"
-            type="text"
-            default="#000000"
-            label="Text Color"
-            description="The color of the Thank you text." />                     
-          <field name="error_text_color"
-            type="text"
-            default="#000000"
-            label="Error Text Color"
-            description="The color of the error texts." />   
-        </fieldset>
+      <fieldset name="size_color" label="Size &amp; Color">  
+          <field name="name_width" type="text" default="12" label="Name Width" description="Width in letters of the name input" />
+          <field name="email_width" type="text" default="12" label="Email Width" description="Width in letters of the email input" />         
+          <field name="thank_text_color" type="text" default="#000000" label="Text Color" description="The color of the Thank you text." />
+          <field name="error_text_color" type="text" default="#000000" label="Error Text Color" description="The color of the error texts." />   
+      </fieldset>
         
-        <fieldset name="mailing_list" label="Mailing List Options">  
-          <field name="save_list"
-            type="radio"
-            default="1" class="btn-group btn-group-yesno"
-            label="Save to List"
-            description="If this is yes, then every subscription is written to a file in 'email' format. (This does not influent sending the email)">
+      <fieldset name="mailing_list" label="Mailing List Options">  
+          <field name="save_list" type="radio" default="1" class="btn-group btn-group-yesno" label="Save to List" description="If this is yes, then every subscription is written to a file in 'email' format. (This does not influent sending the email)">
               <option value="0">JNO</option>
               <option value="1">JYES</option>
           </field>
-        <field name="save_path"
-          type="text"
-          default="mailing_list.txt"
-          label="List File Full Path"
-          description="Full path of list file. Please make sure all directories exist up to the file."/>        
-    </fieldset>
+        <field name="save_path" type="text" default="mailing_list.txt" label="List File Full Path" description="Full path of list file. Please make sure all directories exist up to the file."/>        
+      </fieldset>
     
       <fieldset name="customfields" label="Newsletter Manager &amp; Custom Fields">
-        <field name="nsproad" type="spacer" class="text" label="&lt;h2&gt;Reach your audience professionally!&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://mavrosxristoforos.com/images/nspro_ad.png&quot; alt=&quot;NS Pro&quot; align=&quot;right&quot; style=&quot;width:504px;max-width:100%;&quot;/&gt;&lt;a href=&quot;http://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro&lt;/a&gt; is a professional newsletter Joomla! extension, including a wide variety of features, while maintaining the ability to be used as anything from a simple sign-up form, to a complete newsletter system including newsletter campaigns, multiple mailing lists, personalized newsletters, automatic bounce handling, etc.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Unlimited Mailing Lists, Subscribers, Newsletters&lt;/li&gt;&lt;li&gt;Full featured Mailing List Manager, Subscriber Manager, Newsletter Manager, Front-end Newsletter Manager&lt;/li&gt;&lt;li&gt;Ajax Subscribe Form, Ajax Unsubscribe Form, with flexible, responsive layout&lt;/li&gt;&lt;li&gt;Custom Fields for the Subscribe Form, including hidden fields for IP and other visitor details.&lt;/li&gt;&lt;li&gt;Optional Double Opt-In, Opt-Out with customizable confirmation emails&lt;/li&gt;&lt;li&gt;Guaranteed No Duplicate Subscribers&lt;/li&gt;&lt;li&gt;Subscriber Statistics, Newsletter Opening Statistics&lt;/li&gt;&lt;li&gt;Flexible Subscriber Import (text, CSV)&lt;/li&gt;&lt;li&gt;Guaranteed Newsletter Sending&lt;/li&gt;&lt;li&gt;Newsletter Sending Customizations: Newsletter throttling, Selective Sending, Time Delay&lt;/li&gt;&lt;li&gt;Newsletter Scheduling: Automatic Sending based on date-time or events, After Subscription Campaigns&lt;/li&gt;&lt;li&gt;Newsletter Sending Test Tool&lt;/li&gt;&lt;li&gt;Article Imports, Module Imports, Personalized Details in Newsletters&lt;/li&gt;&lt;li&gt;Bounced Email Check&lt;/li&gt;&lt;li&gt;Unlimited Websites License&lt;/li&gt;&lt;/ul&gt;       
-        &lt;p&gt;NS Pro can be installed, configured and used by anyone with a minimum knowledge of Joomla! Moreover, NS Pro includes all the professional features required, for the more experienced users, to spread their online content, automatically maintain clean subscriber lists, schedule newsletters based on a specific date or specific events, like after subscription, and also customize any visible text in any language with minimum effort. With a 30-day money-back guarantee, why not choose it to take your Newsletters to the next level?&lt;/p&gt;&lt;br/&gt;&lt;a href=&quot;http://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;Learn more!&lt;/a&gt;"/>
+        <field name="nsproad" type="spacer" class="text" label="&lt;h2&gt;Reach your audience professionally!&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://mavrosxristoforos.com/images/nspro_ad.png&quot; alt=&quot;NS Pro&quot; align=&quot;right&quot; style=&quot;width:504px;max-width:100%;&quot;/&gt;&lt;a href=&quot;https://mavrosxristoforos.com/joomla-extensions/commercial/nspro?utm_campaign=params&amp;utm_source=newsletter_subscriber&quot; target=&quot;_blank&quot;&gt;NS Pro&lt;/a&gt; is a professional newsletter Joomla! extension, including a wide variety of features, while maintaining the ability to be used as anything from a simple sign-up form, to a complete newsletter system including newsletter campaigns, multiple mailing lists, personalized newsletters, automatic bounce handling, etc.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Unlimited Mailing Lists, Subscribers, Newsletters&lt;/li&gt;&lt;li&gt;Full featured Mailing List Manager, Subscriber Manager, Newsletter Manager, Front-end Newsletter Manager&lt;/li&gt;&lt;li&gt;Ajax Subscribe Form, Ajax Unsubscribe Form, with flexible, responsive layout&lt;/li&gt;&lt;li&gt;Custom Fields for the Subscribe Form, including hidden fields for IP and other visitor details.&lt;/li&gt;&lt;li&gt;Optional Double Opt-In, Opt-Out with customizable confirmation emails&lt;/li&gt;&lt;li&gt;Guaranteed No Duplicate Subscribers&lt;/li&gt;&lt;li&gt;Subscriber Statistics, Newsletter Opening Statistics&lt;/li&gt;&lt;li&gt;Flexible Subscriber Import (text, CSV)&lt;/li&gt;&lt;li&gt;Guaranteed Newsletter Sending&lt;/li&gt;&lt;li&gt;Newsletter Sending Customizations: Newsletter throttling, Selective Sending, Time Delay&lt;/li&gt;&lt;li&gt;Newsletter Scheduling: Automatic Sending based on date-time or events, After Subscription Campaigns&lt;/li&gt;&lt;li&gt;Newsletter Sending Test Tool&lt;/li&gt;&lt;li&gt;Article Imports, Module Imports, Personalized Details in Newsletters&lt;/li&gt;&lt;li&gt;Bounced Email Check&lt;/li&gt;&lt;li&gt;Unlimited Websites License&lt;/li&gt;&lt;/ul&gt;       
+        &lt;p&gt;NS Pro can be installed, configured and used by anyone with a minimum knowledge of Joomla! Moreover, NS Pro includes all the professional features required, for the more experienced users, to spread their online content, automatically maintain clean subscriber lists, schedule newsletters based on a specific date or specific events, like after subscription, and also customize any visible text in any language with minimum effort. With a 30-day money-back guarantee, why not choose it to take your Newsletters to the next level?&lt;/p&gt;&lt;br/&gt;&lt;a href=&quot;https://mavrosxristoforos.com/joomla-extensions/commercial/nspro?utm_campaign=params&amp;utm_source=newsletter_subscriber&quot; target=&quot;_blank&quot;&gt;Learn more!&lt;/a&gt;"/>
       </fieldset>
     
       <fieldset name="antispam" label="Anti-Spam Options">   
-        <field name="enable_anti_spam"
-        type="radio" default="1"
-        label="Anti-spam" class="btn-group"
-        description="Enable this to use the anti-spam question for anti-spam control">
+        <field name="enable_anti_spam" type="radio" default="1" label="Anti-spam" class="btn-group" description="Enable this to use the anti-spam question for anti-spam control">
             <option value="0">No</option>
             <option value="1">Anti-Spam Question</option>
             <option value="2">Captcha Plugin</option>
         </field>          
-        <field name="anti_spam_q"
-               type="text"
-               default="How many eyes has a typical person?"
-               label="Anti-Spam Question"
-               description="A small text question, preventing you from every automated spam" />
-        <field name="anti_spam_a"
-               type="text"
-               default="2"
-               label="Anti-Spam Answer"
-               description="The correct answer to the anti-spam question" />    
-        <field name="anti_spam_position"
-        type="radio"
-        default="1" class="btn-group"
-        label="Anti-Spam Position"
-        description="The anti-spam position, relative to the Rapid Contact form.">
+        <field name="anti_spam_q" type="text" default="How many eyes has a typical person?" label="Anti-Spam Question" description="A small text question, preventing you from every automated spam" />
+        <field name="anti_spam_a" type="text" default="2" label="Anti-Spam Answer" description="The correct answer to the anti-spam question" />    
+        <field name="anti_spam_position" type="radio" default="1" class="btn-group" label="Anti-Spam Position" description="The anti-spam position, relative to the Rapid Contact form.">
             <option value="0">Before</option>
             <option value="1">After</option>        
         </field>
-    </fieldset>     
-    <fieldset name="advanced">
-        <field name="class_sfx"
-        type="text"
-        default=""
-        label="Class Suffix"
-        description="If you want to apply a custom style, change this class suffix. Example Output: ns your_class_suffix" />    
-        <field name="customcss"
-        type="text"
-        default=""
-        label="Custom CSS"
-        description="Custom CSS for the form." />             
-        <field name="fixed_url"
-        type="radio"
-        default="0" class="btn-group btn-group-yesno"
-        label="Fixed URL"
-        description="A simple solution for people that want to use Newsletter Subscriber in an exact page. Change this to Yes and write the URL of Newsletter Subscriber in the Fixed URL Address parameter">
+      </fieldset>     
+      <fieldset name="advanced">
+        <field name="class_sfx" type="text" default="" label="Class Suffix" description="If you want to apply a custom style, change this class suffix. Example Output: ns your_class_suffix" />    
+        <field name="customcss" type="text" default="" label="Custom CSS" description="Custom CSS for the form." />             
+        <field name="fixed_url" type="radio" default="0" class="btn-group btn-group-yesno" label="Fixed URL" description="A simple solution for people that want to use Newsletter Subscriber in an exact page. Change this to Yes and write the URL of Newsletter Subscriber in the Fixed URL Address parameter">
             <option value="0">JNO</option>
             <option value="1">JYES</option>        
         </field>        
-        <field name="fixed_url_address"
-        type="text"
-        default=""
-        label="Fixed URL Address"
-        description="If fixed url is true, this address is used for Newsletter Subscriber to post itself."/> 
-    </fieldset></fields></config>
+        <field name="fixed_url_address" type="text" default="" label="Fixed URL Address" description="If fixed url is true, this address is used for Newsletter Subscriber to post itself."/> 
+      </fieldset>
+    </fields></config>
 </extension>
