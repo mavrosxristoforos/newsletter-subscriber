@@ -10,7 +10,12 @@
 -------------------------------------------------------------------------*/
 
 // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+\defined( '_JEXEC' ) or die( 'Restricted access' );
+
+use \Joomla\CMS\Factory;
+use \Joomla\CMS\Language\Text;
+use \Joomla\CMS\Helper\ModuleHelper;
+//use \Joomla\CMS\Plugin\PluginHelper;
 
 // Notification Options
 $recipient = $params->get('email_recipient', '');
@@ -51,7 +56,7 @@ $anti_spam_position = $params->get('anti_spam_position', 0);
 
 // Advanced
 $mod_class_suffix = $params->get('moduleclass_sfx', '');
-$document = JFactory::getDocument();
+$document = Factory::getDocument();
 $document->addStyleDeclaration('
   .modns .input-group input.modns{max-width: 92%; margin-bottom: 8px;}
   .modns .g-recaptcha {margin-bottom: 5px;}
@@ -64,29 +69,29 @@ if (isset($_POST["m_name".$unique_id])) {
   $errors = 0;
   if ($enable_anti_spam == '1') {
     if (strtolower($_POST['modns_anti_spam_answer'.$unique_id]) != strtolower($myAntiSpamAnswer)) {
-      $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+      $myError = '<span style="color: '.$errorTextColor.';">' . Text::_('Wrong anti-spam answer') . '</span><br/>';
     }
   }
   else if ($enable_anti_spam == '2') {
     // check captcha plugin.
     $isCaptchaValidated = true;
-    if (JFactory::getConfig()->get('captcha') != '0') {
-      $captcha = JCaptcha::getInstance(JFactory::getConfig()->get('captcha'));
+    if (Factory::getConfig()->get('captcha') != '0') {
+      $captcha = JCaptcha::getInstance(Factory::getConfig()->get('captcha'));
       try {
-        $isCaptchaValidated = $captcha->checkAnswer(JFactory::getApplication()->input->get('ns_recaptcha', null, 'string'));
+        $isCaptchaValidated = $captcha->checkAnswer(Factory::getApplication()->input->get('ns_recaptcha', null, 'string'));
       }
       catch(RuntimeException $e) {
         $isCaptchaValidated = false;
       }
     }
     if (!$isCaptchaValidated) {
-      $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+      $myError = '<span style="color: '.$errorTextColor.';">' . Text::_('Wrong anti-spam answer') . '</span><br/>';
     }
-    /*JPluginHelper::importPlugin('captcha');
+    /*PluginHelper::importPlugin('captcha');
     $d = JEventDispatcher::getInstance();
     $res = $d->trigger('onCheckAnswer', 'not_used');
     if( (!isset($res[0])) || (!$res[0]) ){
-      $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+      $myError = '<span style="color: '.$errorTextColor.';">' . Text::_('Wrong anti-spam answer') . '</span><br/>';
     }*/
   }
   if ($_POST["m_name".$unique_id] === "") {
@@ -103,12 +108,12 @@ if (isset($_POST["m_name".$unique_id])) {
   }
 
   if ($myError == "") {
-    $myMessage = JText::_('Name') . ': ' . $_POST["m_name".$unique_id] . ', ' ."\n".
-                 JText::_('Email') . ': ' . $_POST["m_email".$unique_id] . ', ' ."\n".
+    $myMessage = Text::_('Name') . ': ' . $_POST["m_name".$unique_id] . ', ' ."\n".
+                 Text::_('Email') . ': ' . $_POST["m_email".$unique_id] . ', ' ."\n".
                  date("r")."\n".
-                 JText::_('IP').': '.$_SERVER['REMOTE_ADDR'];
+                 Text::_('IP').': '.$_SERVER['REMOTE_ADDR'];
 
-    $mailSender = JFactory::getMailer();
+    $mailSender = Factory::getMailer();
     $mailSender->addRecipient($recipient);
     if ($sendingWithSetEmail) {
       $mailSender->setSender(array($fromEmail,$fromName));
@@ -120,12 +125,18 @@ if (isset($_POST["m_name".$unique_id])) {
     $mailSender->setSubject($subject);
     $mailSender->setBody($myMessage);
 
-    if (!$mailSender->Send()) {
-      $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span></div>';
-      print $myReplacement;
+    try {
+      if (!$mailSender->Send()) {
+        $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span></div>';
+        print $myReplacement;
+      }
+      else {
+        $myReplacement = '<div class="modns"><span style="color: '.$thanksTextColor.';">' . $pageText . '</span></div>';
+        print $myReplacement;
+      }
     }
-    else {
-      $myReplacement = '<div class="modns"><span style="color: '.$thanksTextColor.';">' . $pageText . '</span></div>';
+    catch(\Throwable $e) {
+      $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span><br/>'.$e->getMessage().'</div>';
       print $myReplacement;
     }
     if ($saveList) {
@@ -152,7 +163,7 @@ if ($recipient === "email@email.com") {
 // Prepare for Template
 $anti_spam_field = '';
 if ($enable_anti_spam == '2') {
-  $anti_spam_field = (JFactory::getConfig()->get('captcha') != '0') ? JCaptcha::getInstance(JFactory::getConfig()->get('captcha'))->display('ns_recaptcha', 'ns_recaptcha', 'g-recaptcha') : '';
+  $anti_spam_field = (Factory::getConfig()->get('captcha') != '0') ? JCaptcha::getInstance(Factory::getConfig()->get('captcha'))->display('ns_recaptcha', 'ns_recaptcha', 'g-recaptcha') : '';
 }
 else if ($enable_anti_spam == '1') {
   // Label as Placeholder option is intentionally overlooked.
@@ -167,4 +178,4 @@ $email_value = (($errors & 2) != 2) ? ' value="'.htmlentities($_POST["m_email".$
 $action = '';
 if ($params->get('fixed_url', false)) { $action = ' action="' . $params->get('fixed_url_address', "") . '" '; }
 
-require JModuleHelper::getLayoutPath('mod_newsletter_subscriber');
+require ModuleHelper::getLayoutPath('mod_newsletter_subscriber');

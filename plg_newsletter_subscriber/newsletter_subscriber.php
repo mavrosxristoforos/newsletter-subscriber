@@ -10,11 +10,14 @@
 -------------------------------------------------------------------------*/
 
 // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+\defined( '_JEXEC' ) or die( 'Restricted access' );
 
-jimport( 'joomla.plugin.plugin' );
+use \Joomla\CMS\Factory;
+use \Joomla\CMS\Language\Text;
+use \Joomla\CMS\Plugin\CMSPlugin;
+use \Joomla\CMS\Plugin\PluginHelper;
 
-class plgContentNewsletter_subscriber extends JPlugin {
+class plgContentNewsletter_subscriber extends CMSPlugin {
 
   public function onContentPrepare($context, &$row, &$params, $page = 0) {
     if (is_object($row)) {
@@ -69,7 +72,7 @@ class plgContentNewsletter_subscriber extends JPlugin {
 
     // Advanced
     $class_suffix = $pluginParams->get('class_sfx', '');
-    $document = JFactory::getDocument();
+    $document = Factory::getDocument();
     $document->addStyleDeclaration('
       .ns .input-group input.ns{max-width: 92%; margin-bottom: 8px; position: static; flex: none; width: 92%; }
       .ns .g-recaptcha {margin-bottom: 5px;}
@@ -82,29 +85,29 @@ class plgContentNewsletter_subscriber extends JPlugin {
       $errors = 0;
       if ($enable_anti_spam == '1') {
         if (strtolower($_POST['ns_anti_spam_answer'.$unique_id]) != strtolower($myAntiSpamAnswer)) {
-          $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+          $myError = '<span style="color: '.$errorTextColor.';">' . Text::_('Wrong anti-spam answer') . '</span><br/>';
         }
       }
       else if ($enable_anti_spam == '2') {
         // check captcha plugin.
         $isCaptchaValidated = true;
-        if (JFactory::getConfig()->get('captcha') != '0') {
-          $captcha = JCaptcha::getInstance(JFactory::getConfig()->get('captcha'));
+        if (Factory::getConfig()->get('captcha') != '0') {
+          $captcha = JCaptcha::getInstance(Factory::getConfig()->get('captcha'));
           try {
-            $isCaptchaValidated = $captcha->checkAnswer(JFactory::getApplication()->input->get('ns_recaptcha', null, 'string'));
+            $isCaptchaValidated = $captcha->checkAnswer(Factory::getApplication()->input->get('ns_recaptcha', null, 'string'));
           }
           catch(RuntimeException $e) {
             $isCaptchaValidated = false;
           }
         }
         if (!$isCaptchaValidated) {
-          $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+          $myError = '<span style="color: '.$errorTextColor.';">' . Text::_('Wrong anti-spam answer') . '</span><br/>';
         }
-        /*JPluginHelper::importPlugin('captcha');
+        /*PluginHelper::importPlugin('captcha');
         $d = JEventDispatcher::getInstance();
         $res = $d->trigger('onCheckAnswer', 'not_used');
         if( (!isset($res[0])) || (!$res[0]) ){
-          $myError = '<span style="color: '.$errorTextColor.';">' . JText::_('Wrong anti-spam answer') . '</span><br/>';
+          $myError = '<span style="color: '.$errorTextColor.';">' . Text::_('Wrong anti-spam answer') . '</span><br/>';
         }*/
       }
       if ($_POST["m_name".$unique_id] === "") {
@@ -121,12 +124,12 @@ class plgContentNewsletter_subscriber extends JPlugin {
       }
 
       if ($myError == "") {
-        $myMessage = JText::_('Name') . ': ' . $_POST["m_name".$unique_id] . ', ' ."\n".
-                     JText::_('Email') . ': ' . $_POST["m_email".$unique_id] . ', ' ."\n".
+        $myMessage = Text::_('Name') . ': ' . $_POST["m_name".$unique_id] . ', ' ."\n".
+                     Text::_('Email') . ': ' . $_POST["m_email".$unique_id] . ', ' ."\n".
                      date("r")."\n".
-                     JText::_('IP').': '.$_SERVER['REMOTE_ADDR'];
+                     Text::_('IP').': '.$_SERVER['REMOTE_ADDR'];
 
-        $mailSender = JFactory::getMailer();
+        $mailSender = Factory::getMailer();
         $mailSender->addRecipient($recipient);
         if ($sendingWithSetEmail) {
           $mailSender->setSender(array($fromEmail,$fromName));
@@ -138,12 +141,18 @@ class plgContentNewsletter_subscriber extends JPlugin {
         $mailSender->setSubject($subject);
         $mailSender->setBody($myMessage);
 
-        if (!$mailSender->Send()) {
-          $myReplacement = '<div class="ns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span></div>';
-          $text = str_replace('{newsletter_subscriber}', $myReplacement, $text);
+        try {
+          if (!$mailSender->Send()) {
+            $myReplacement = '<div class="ns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span></div>';
+            $text = str_replace('{newsletter_subscriber}', $myReplacement, $text);
+          }
+          else {
+            $myReplacement = '<div class="ns"><span style="color: '.$thanksTextColor.';">' . $pageText . '</span></div>';
+            $text = str_replace('{newsletter_subscriber}', $myReplacement, $text);
+          }
         }
-        else {
-          $myReplacement = '<div class="ns"><span style="color: '.$thanksTextColor.';">' . $pageText . '</span></div>';
+        catch(\Throwable $e) {
+          $myReplacement = '<div class="ns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span><br/>'.$e->getMessage().'</div>';
           $text = str_replace('{newsletter_subscriber}', $myReplacement, $text);
         }
         if ($saveList) {
@@ -170,7 +179,7 @@ class plgContentNewsletter_subscriber extends JPlugin {
     // Prepare for Template
     $anti_spam_field = '';
     if ($enable_anti_spam == '2') {
-      $anti_spam_field = (JFactory::getConfig()->get('captcha') != '0') ? JCaptcha::getInstance(JFactory::getConfig()->get('captcha'))->display('ns_recaptcha', 'ns_recaptcha', 'g-recaptcha') : '';
+      $anti_spam_field = (Factory::getConfig()->get('captcha') != '0') ? JCaptcha::getInstance(Factory::getConfig()->get('captcha'))->display('ns_recaptcha', 'ns_recaptcha', 'g-recaptcha') : '';
     }
     else if ($enable_anti_spam == '1') {
       // Label as Placeholder option is intentionally overlooked.
@@ -185,7 +194,7 @@ class plgContentNewsletter_subscriber extends JPlugin {
     $action = '';
     if ($pluginParams->get('fixed_url', false)) { $action = ' action="' . $pluginParams->get('fixed_url_address', "") . '" '; }
 
-    $path = JPluginHelper::getLayoutPath('content', 'newsletter_subscriber');
+    $path = PluginHelper::getLayoutPath('content', 'newsletter_subscriber');
     ob_start();
     require $path;
     $myReplacement = ob_get_clean();
