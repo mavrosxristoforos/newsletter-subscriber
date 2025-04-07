@@ -7,7 +7,7 @@
     <license>GNU General Public License</license>
     <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
     <authorUrl>https://www.mavrosxristoforos.com/</authorUrl>
-<version>1.5.54</version>
+<version>1.5.55</version>
     <description>A simple subscription module. Sends an email to the recipient with user's submitted data and saves them in a text file.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;https://mavrosxristoforos.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
     <files>
         <filename module="mod_newsletter_subscriber">mod_newsletter_subscriber.php</filename>
