@@ -15,6 +15,7 @@
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Language\Text;
 use \Joomla\CMS\Helper\ModuleHelper;
+use \Joomla\CMS\Captcha\Captcha;
 //use \Joomla\CMS\Plugin\PluginHelper;
 
 // Notification Options
@@ -76,7 +77,7 @@ if (isset($_POST["m_name".$unique_id])) {
     // check captcha plugin.
     $isCaptchaValidated = true;
     if (Factory::getConfig()->get('captcha') != '0') {
-      $captcha = JCaptcha::getInstance(Factory::getConfig()->get('captcha'));
+      $captcha = Captcha::getInstance(Factory::getConfig()->get('captcha'));
       try {
         $isCaptchaValidated = $captcha->checkAnswer(Factory::getApplication()->input->get('ns_recaptcha', null, 'string'));
       }
@@ -163,7 +164,7 @@ if ($recipient === "email@email.com") {
 // Prepare for Template
 $anti_spam_field = '';
 if ($enable_anti_spam == '2') {
-  $anti_spam_field = (Factory::getConfig()->get('captcha') != '0') ? JCaptcha::getInstance(Factory::getConfig()->get('captcha'))->display('ns_recaptcha', 'ns_recaptcha', 'g-recaptcha') : '';
+  $anti_spam_field = (Factory::getConfig()->get('captcha') != '0') ? Captcha::getInstance(Factory::getConfig()->get('captcha'))->display('ns_recaptcha', 'ns_recaptcha', 'g-recaptcha') : '';
 }
 else if ($enable_anti_spam == '1') {
   // Label as Placeholder option is intentionally overlooked.
