@@ -7,7 +7,7 @@
     <license>GNU General Public License</license>
     <authorEmail>mavrosxristoforos@gmail.com</authorEmail>
     <authorUrl>https://mavxr.com/</authorUrl>
-<version>2.0.63</version>
+<version>2.0.70</version>
     <description>A simple subscription module. Sends an email to the recipient with user's submitted data and saves them in a text file.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;https://mavxr.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
     <files>
         <filename module="mod_newsletter_subscriber">mod_newsletter_subscriber.php</filename>
@@ -47,8 +47,8 @@
         <fieldset name="size_color" label="Size &amp; Color">
           <field name="name_width" type="text" default="12" label="Name Width" description="Width in letters of the name input" />
           <field name="email_width" type="text" default="12" label="Email Width" description="Width in letters of the email input" />
-          <field name="thank_text_color" type="text" default="#000000" label="Text Color" description="The color of the Thank you text." />
-          <field name="error_text_color" type="text" default="#000000" label="Error Text Color" description="The color of the error texts." />
+          <field name="thank_text_color" type="color" default="#000000" label="Text Color" description="The color of the Thank you text." />
+          <field name="error_text_color" type="color" default="#000000" label="Error Text Color" description="The color of the error texts." />
         </fieldset>
         <fieldset name="mailing_list" label="Mailing List Options">
           <field name="save_list" type="radio" default="1" class="btn-group btn-group-yesno" label="Save to List" description="If this is yes, then every subscription is written to a file in 'email' format. (This does not influent sending the email)">
