@@ -166,7 +166,8 @@ if ($postedName !== null) {
 
     if ($saveList) {
       $file = fopen($savePath, "a");
-      fwrite($file, $postedName." (".$postedEmail."); ");
+      $safeName = '"' . str_replace(array('\\', '"'), array('\\\\', '\\"'), $postedName) . '"';
+      fwrite($file, $safeName." <".$postedEmail.">, ");
       fclose($file);
     }
 

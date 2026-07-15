@@ -8,15 +8,15 @@
   <authorUrl>https://mavxr.com</authorUrl>
   <copyright>All Rights Reserved (C) Mavxr.com</copyright>
   <license>GPLv3</license>
-<version>2.0.70</version>
+<version>2.0.66</version>
   <description>Newsletter Subscriber - A Simple Sign-up form for your Mailing List.&lt;br/&gt;For a more professional solution, please see &lt;a href=&quot;https://mavxr.com/joomla-extensions/commercial/nspro&quot; target=&quot;_blank&quot;&gt;NS Pro.&lt;/a&gt;</description>
   <files>
-    <file type="module" id="mod_newsletter_subscriber">mod_newsletter_subscriber.zip</file>    
+    <file type="module" id="mod_newsletter_subscriber">mod_newsletter_subscriber.zip</file>
     <file type="plugin" id="newsletter_subscriber">newsletter_subscriber.zip</file>
   </files>
   <updateservers>
      <server type="extension" priority="1" name="Newsletter Subscriber Updates">https://mavxr.com/index.php?option=com_extensionupdater&amp;extension=newsletter_subscriber</server>
-  </updateservers>  
+  </updateservers>
   <params/>
   <config/>
 </extension>
