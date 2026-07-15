@@ -165,10 +165,55 @@ if ($postedName !== null) {
     }
 
     if ($saveList) {
-      $file = fopen($savePath, "a");
+      $guard = "<?php die('Forbidden.'); ?>\n";
+      $realSavePath = $savePath;
+
+      $isAbsolute = preg_match('#^([A-Za-z]:[/\\\\]|/)#', $savePath);
+      $resolvedDir = $isAbsolute ? realpath(dirname($savePath)) : false;
+      $insideWebRoot = !$isAbsolute
+        || ($resolvedDir !== false && strpos($resolvedDir . DIRECTORY_SEPARATOR, JPATH_ROOT . DIRECTORY_SEPARATOR) === 0);
+
+      if ($insideWebRoot && strtolower(substr($savePath, -4)) !== '.php') {
+        $realSavePath = $savePath . '.php';
+        // One-time migration: rescue a legacy, publicly downloadable list file.
+        if (is_file($savePath) && !is_file($realSavePath)) {
+          file_put_contents($realSavePath, $guard . file_get_contents($savePath));
+          unlink($savePath);
+        }
+      }
+
+      if (!is_file($realSavePath)) {
+        file_put_contents($realSavePath, $insideWebRoot ? $guard : '');
+      }
+
+      // One-time, lazy conversion of legacy 'Name (email); ' entries to the RFC 5322 recipient format.
+      $head = (string) file_get_contents($realSavePath, false, null, 0, 512);
+      if (strncmp($head, '<?php', 5) === 0) {
+        $head = (string) substr($head, strpos($head, "\n") + 1);
+      }
+      if (preg_match('/\([^()]*@[^()]*\);/', $head)) {
+        $content = (string) file_get_contents($realSavePath);
+        $guardLine = '';
+        if (strncmp($content, '<?php', 5) === 0) {
+          // Never let the conversion touch the die-guard.
+          $cut = strpos($content, "\n") + 1;
+          $guardLine = substr($content, 0, $cut);
+          $content = substr($content, $cut);
+        }
+        $converted = preg_replace_callback(
+          '/(.*?)\s*\(([^()]*@[^()]*)\);\s*/s',
+          function ($m) {
+            return '"' . str_replace(array('\\', '"'), array('\\\\', '\\"'), trim($m[1])) . '" <' . $m[2] . '>, ';
+          },
+          $content
+        );
+        if ($converted !== null) {
+          file_put_contents($realSavePath, $guardLine . $converted);
+        }
+      }
+
       $safeName = '"' . str_replace(array('\\', '"'), array('\\\\', '\\"'), $postedName) . '"';
-      fwrite($file, $safeName." <".$postedEmail.">, ");
-      fclose($file);
+      file_put_contents($realSavePath, $safeName . ' <' . $postedEmail . '>, ', FILE_APPEND);
     }
 
     if ($mailOk) {
