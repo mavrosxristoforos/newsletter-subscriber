@@ -21,6 +21,7 @@ use \Joomla\CMS\Uri\Uri;
 
 $app = Factory::getApplication();
 $input = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
+$session = method_exists($app, 'getSession') ? $app->getSession() : Factory::getSession();
 
 // Notification Options
 $recipient = $params->get('email_recipient', '');
@@ -119,9 +120,8 @@ if ($postedName !== null) {
     // Honeypot: real visitors never see or fill this field.
     // A filled honeypot is silently discarded, so bots cannot tell they were caught.
     if ($input->post->get('modns_hp'.$unique_id, '', 'string') !== '') {
-      $uri = Uri::getInstance();
-      $uri->setVar('modns_thanks', $unique_id);
-      $app->redirect($uri->toString(), 303);
+      $session->set('modns_thanks', $unique_id);
+      $app->redirect(Uri::getInstance()->toString(), 303);
     }
   }
   if ($postedName === "") {
@@ -172,9 +172,9 @@ if ($postedName !== null) {
 
     if ($mailOk) {
       // Post/Redirect/Get: a refresh will not re-submit the subscription.
-      $uri = Uri::getInstance();
-      $uri->setVar('modns_thanks', $unique_id);
-      $app->redirect($uri->toString(), 303);
+      // The thank-you state travels in the session, keeping the URL clean.
+      $session->set('modns_thanks', $unique_id);
+      $app->redirect(Uri::getInstance()->toString(), 303);
     }
 
     $myReplacement = '<div class="modns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span>'.$mailException.'</div>';
@@ -184,9 +184,10 @@ if ($postedName !== null) {
 }
 
 // Post/Redirect/Get: display the thank-you message after a successful submission.
-$thanksToken = $input->get('modns_thanks', '', 'cmd');
+$thanksToken = (string) $session->get('modns_thanks', '');
 $uniqueIdPrefix = (string) $params->get('unique_id', '');
 if ($thanksToken !== '' && ($uniqueIdPrefix === '' || strpos($thanksToken, $uniqueIdPrefix) === 0)) {
+  $session->set('modns_thanks', null);
   print '<div class="modns"><span style="color: '.$thanksTextColor.';">' . $pageText . '</span></div>';
   return true;
 }

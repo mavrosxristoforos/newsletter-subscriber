@@ -40,6 +40,7 @@ class plgContentNewsletter_subscriber extends CMSPlugin {
 
     $app = Factory::getApplication();
     $input = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
+    $session = method_exists($app, 'getSession') ? $app->getSession() : Factory::getSession();
 
     // Notification Options
     $recipient = $pluginParams->get('email_recipient', '');
@@ -138,9 +139,8 @@ class plgContentNewsletter_subscriber extends CMSPlugin {
         // Honeypot: real visitors never see or fill this field.
         // A filled honeypot is silently discarded, so bots cannot tell they were caught.
         if ($input->post->get('ns_hp'.$unique_id, '', 'string') !== '') {
-          $uri = Uri::getInstance();
-          $uri->setVar('ns_thanks', $unique_id);
-          $app->redirect($uri->toString(), 303);
+          $session->set('ns_thanks', $unique_id);
+          $app->redirect(Uri::getInstance()->toString(), 303);
         }
       }
       if ($postedName === "") {
@@ -191,9 +191,9 @@ class plgContentNewsletter_subscriber extends CMSPlugin {
 
         if ($mailOk) {
           // Post/Redirect/Get: a refresh will not re-submit the subscription.
-          $uri = Uri::getInstance();
-          $uri->setVar('ns_thanks', $unique_id);
-          $app->redirect($uri->toString(), 303);
+          // The thank-you state travels in the session, keeping the URL clean.
+          $session->set('ns_thanks', $unique_id);
+          $app->redirect(Uri::getInstance()->toString(), 303);
         }
 
         $myReplacement = '<div class="ns"><span style="color: '.$errorTextColor.';">' . $errorText . '</span>'.$mailException.'</div>';
@@ -203,9 +203,10 @@ class plgContentNewsletter_subscriber extends CMSPlugin {
     }
 
     // Post/Redirect/Get: display the thank-you message after a successful submission.
-    $thanksToken = $input->get('ns_thanks', '', 'cmd');
+    $thanksToken = (string) $session->get('ns_thanks', '');
     $uniqueIdPrefix = (string) $pluginParams->get('unique_id', '');
     if ($thanksToken !== '' && ($uniqueIdPrefix === '' || strpos($thanksToken, $uniqueIdPrefix) === 0)) {
+      $session->set('ns_thanks', null);
       $myReplacement = '<div class="ns"><span style="color: '.$thanksTextColor.';">' . $pageText . '</span></div>';
       $text = str_replace('{newsletter_subscriber}', $myReplacement, $text);
       return true;
